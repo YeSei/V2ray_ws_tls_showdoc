@@ -256,6 +256,7 @@ modify_nginx_port(){
 modify_nginx_other(){
     sed -i "/server_name/c \\\tserver_name ${domain};" ${nginx_conf}
     sed -i "/location/c \\\tlocation \/${camouflage}\/" ${nginx_conf}
+    sed -i "/proxy_pass/c \\\tproxy_pass http://127.0.0.1:${PORT};" ${nginx_conf}
     sed -i "/return/c \\\treturn 301 https://${domain}\$request_uri;" ${nginx_conf}
     #sed -i "27i \\\tproxy_intercept_errors on;"  ${nginx_dir}/conf/nginx.conf
 }
@@ -477,17 +478,8 @@ nginx_conf_add(){
         index index.php index.html;
         root  /home/www/showdoc;
         error_page 400 = /400.html;
-        location /ray/
-        {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:10000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
-        }
         location ~ .php$ {
-        root           /var/www/html;
+        root           /home/www/showdoc;
         fastcgi_pass   127.0.0.1:9000;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
@@ -520,8 +512,8 @@ start_process_systemd(){
 
 enable_process_systemd(){
     systemctl enable v2ray
-    systemctl enable nginx.service
-    judge "设置 v2ray 开机自启"
+    systemctl enable nginx
+    judge "设置 v2ray 和 nginx 开机自启"
     if [[ "$shell_mode" != "h2" ]]
     then
         systemctl enable nginx
