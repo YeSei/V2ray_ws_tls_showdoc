@@ -480,7 +480,7 @@ nginx_conf_add(){
         error_page 400 = /400.html;
         location /ray/
         {
-        nclude        fastcgi_params;
+        include        fastcgi_params;
         root           /var/www/html;
         fastcgi_pass   127.0.0.1:9000;
         fastcgi_index  index.php;
