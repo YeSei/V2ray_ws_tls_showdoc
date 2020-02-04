@@ -512,7 +512,7 @@ start_process_systemd(){
 
 enable_process_systemd(){
     systemctl enable v2ray
-    systemctl enable nginx
+    systemctl enable nginx.service
     judge "设置 v2ray 开机自启"
     if [[ "$shell_mode" != "h2" ]]
     then
