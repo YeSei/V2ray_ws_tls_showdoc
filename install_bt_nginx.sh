@@ -464,7 +464,7 @@ v2ray_conf_add_h2(){
     modify_UUID
 }
 nginx_conf_add(){
-    sed -i "s/include \/www\/server\/panel\/vhost\/nginx\/*.conf;/include conf.d\/*.conf;"${nginx_dir}/conf/nginx.conf
+    sed -i "s#include\ \/www\/server\/panel\/vhost\/nginx\/\*.conf;#include conf.d\/*.conf;#g" ${nginx_dir}/conf/nginx.conf
     mkdir ${nginx_conf_dir}
     touch ${nginx_conf_dir}/v2ray.conf
     cat>${nginx_conf_dir}/v2ray.conf<<EOF
@@ -687,7 +687,7 @@ ssl_update_manuel(){
     [ -f ${amce_sh_file} ] && "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" || echo -e  "${RedBG}证书签发工具不存在，请确认你是否使用了自己的证书${Font}"
 }
 bbr_boost_sh(){
-    wget -N --no-check-certificate "https://github.com/ylx2016/Linux-NetSpeed/releases/download/sh/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+    wget "https://github.com/chiakge/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
 }
 mtproxy_sh(){
     wget -N --no-check-certificate https://github.com/whunt1/onekeymakemtg/raw/master/mtproxy_go.sh && chmod +x mtproxy_go.sh && bash mtproxy_go.sh
@@ -897,4 +897,3 @@ menu(){
 
 judge_mode
 list $1
-
