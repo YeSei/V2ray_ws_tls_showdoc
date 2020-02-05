@@ -464,7 +464,7 @@ v2ray_conf_add_h2(){
     modify_UUID
 }
 nginx_conf_add(){
-    sed -i '$i include /www/server/panel/vhost/nginx/*.conf;' ${nginx_dir}/conf/nginx.conf
+    sed -i "s/include \/www\/server\/panel\/vhost\/nginx\/*.conf;/include conf.d\/*.conf;"${nginx_dir}/conf/nginx.conf
     mkdir ${nginx_conf_dir}
     touch ${nginx_conf_dir}/v2ray.conf
     cat>${nginx_conf_dir}/v2ray.conf<<EOF
