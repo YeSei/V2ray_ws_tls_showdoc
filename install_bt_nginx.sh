@@ -307,6 +307,8 @@ nginx_exist_check(){
         echo -e "${OK} ${GreenBG} Nginx已存在，跳过编译安装过程 ${Font}"
         sleep 2
     else
+        port_exist_check 80
+        port_exist_check ${port}
         nginx_install
     fi
 }
@@ -723,8 +725,6 @@ install_v2ray_ws_tls(){
     domain_check
     port_alterid_set
     v2ray_install
-    port_exist_check 80
-    port_exist_check ${port}
     nginx_exist_check
     v2ray_conf_add_tls
     nginx_conf_add
