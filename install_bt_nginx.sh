@@ -463,6 +463,7 @@ v2ray_conf_add_h2(){
 }
 nginx_conf_add(){
     sed -i '$i include conf.d/*.conf;' ${nginx_dir}/conf/nginx.conf
+    mkdir ${nginx_conf_dir}
     touch ${nginx_conf_dir}/v2ray.conf
     cat>${nginx_conf_dir}/v2ray.conf<<EOF
     server {
