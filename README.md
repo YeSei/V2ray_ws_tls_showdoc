@@ -20,7 +20,9 @@ v2ray：
 > [记录类型]:A [记录名]：www（或者别的都行）[记录值]：xxxx.xxx.xxx.xxx（你购买的搭建vpn的服务器ip)
 > 配置完，到http://ping.chinaz.com/ 输入自己的www.tt.net,查看ping得结果是否是自己的服务器ip。
 - 登陆到自己的服务器,进入命令行，输入执行如下命令：
-
+```
+wget -O install.sh "https://raw.githubusercontent.com/YeSei/V2ray_ws_tls_showdoc/master/install.sh" && chmod +x install.sh && bash install.sh
+```
 - 安装顺序：
   - 1]：选择1 Nginx+ws+tls
   - 2]：在输入域名信息时输入自己注册的：www.tt.net 。其他的都默认即可。
