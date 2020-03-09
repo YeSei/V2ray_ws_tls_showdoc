@@ -32,7 +32,7 @@ nginx_conf_dir="/etc/nginx/conf/conf.d"
 v2ray_conf="${v2ray_conf_dir}/config.json"
 nginx_conf="${nginx_conf_dir}/v2ray.conf"
 nginx_dir="/etc/nginx"
-web_dir="/home/www"
+web_dir="/home/wwwroot"
 nginx_openssl_src="/usr/local/src"
 v2ray_bin_file="/usr/bin/v2ray"
 v2ray_info_file="$HOME/v2ray_info.inf"
@@ -271,9 +271,9 @@ composer_install(){
 }
 web_camouflage(){
     ##请注意 这里和LNMP脚本的默认路径冲突，千万不要在安装了LNMP的环境下使用本脚本，否则后果自负
-    rm -rf /home/www && mkdir -p /home/www && cd /home/www
-    git clone https://github.com/wulabing/3DCEList.git
-    judge "web 站点伪装showdoc"
+    rm -rf /home/wwwroot && mkdir -p /home/wwwroot && cd /home/wwwroot
+    git clone https://github.com/lunagin/www.git
+    judge "web 站点伪装"
 }
 v2ray_install(){
     if [[ -d /root/v2ray ]];then
@@ -467,7 +467,7 @@ nginx_conf_add(){
         ssl_ciphers           TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
         server_name           serveraddr.com;
         index index.html index.htm;
-        root  /home/www/3DCEList;
+        root  /home/wwwroot/www;
         error_page 400 = /400.html;
         location /ray/
         {
@@ -552,7 +552,7 @@ vmess_qr_config_tls_ws(){
     cat > $v2ray_qr_config_file <<-EOF
 {
   "v": "2",
-  "ps": "dyj_${domain}",
+  "ps": "yesei_${domain}",
   "add": "${domain}",
   "port": "${port}",
   "id": "${UUID}",
@@ -570,7 +570,7 @@ vmess_qr_config_h2(){
     cat > $v2ray_qr_config_file <<-EOF
 {
   "v": "2",
-  "ps": "dyj_${domain}",
+  "ps": "yesei_${domain}",
   "add": "${domain}",
   "port": "${port}",
   "id": "${UUID}",
@@ -678,7 +678,7 @@ ssl_update_manuel(){
     [ -f ${amce_sh_file} ] && "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" || echo -e  "${RedBG}证书签发工具不存在，请确认你是否使用了自己的证书${Font}"
 }
 bbr_boost_sh(){
-    wget -N --no-check-certificate "https://github.com/ylx2016/Linux-NetSpeed/releases/download/sh/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
+    wget "https://github.com/chiakge/Linux-NetSpeed/raw/master/tcp.sh" && chmod +x tcp.sh && ./tcp.sh
 }
 mtproxy_sh(){
     wget -N --no-check-certificate https://github.com/whunt1/onekeymakemtg/raw/master/mtproxy_go.sh && chmod +x mtproxy_go.sh && bash mtproxy_go.sh
@@ -754,7 +754,7 @@ install_v2_h2(){
 
 }
 update_sh(){
-    echo -e "本人自用，暂无更新QAQ，AUTHOR：dengyangjie（yesei）"
+    echo -e "本人自用，暂无更新QAQ，@dengyangjie（yesei）"
     
 }
 maintain(){
@@ -783,32 +783,32 @@ list(){
 }
 
 menu(){
-    echo -e "\t V2ray 安装 ${Red}[${shell_version}]${Font}"
+    echo -e "\t夜西 V2ray 安装 ${Red}[${shell_version}]${Font}"
     echo -e "\tAuthor：dengyangjie"
     echo -e "\thttps://github.com/yesei\n"
     echo -e "当前已安装版本:${shell_mode}\n"
 
-    echo -e "—————————————— 安装向导 ——————————————"""
-    echo -e "${Green}0.${Font}  升级 脚本"
-    echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
-    echo -e "${Green}2.${Font}  安装 V2Ray (http/2)"
-    echo -e "${Green}3.${Font}  升级 V2Ray core"
-    echo -e "—————————————— 配置变更 ——————————————"
-    echo -e "${Green}4.${Font}  变更 UUID"
-    echo -e "${Green}5.${Font}  变更 alterid"
-    echo -e "${Green}6.${Font}  变更 port"
-    echo -e "${Green}7.${Font}  变更 TLS 版本(仅ws+tls有效)"
-    echo -e "—————————————— 查看信息 ——————————————"
-    echo -e "${Green}8.${Font}  查看 实时访问日志"
-    echo -e "${Green}9.${Font}  查看 实时错误日志"
-    echo -e "${Green}10.${Font} 查看 V2Ray 配置信息"
-    echo -e "—————————————— 其他选项 ——————————————"
-    echo -e "${Green}11.${Font} 安装 4合1 bbr 锐速安装脚本"
-    echo -e "${Green}12.${Font} 安装 MTproxy(支持TLS混淆)"
-    echo -e "${Green}13.${Font} 证书 有效期更新"
-    echo -e "${Green}14.${Font} 卸载 V2Ray"
-    echo -e "${Green}15.${Font} 更新 证书crontab计划任务"
-    echo -e "${Green}16.${Font} 退出 \n"
+    echo -e "—————————————— [安装向导] ——————————————"""
+    echo -e "${Green}0].${Font}  升级 脚本"
+    echo -e "${Green}1].${Font}  安装 V2Ray (Nginx+ws+tls)"
+    echo -e "${Green}2].${Font}  安装 V2Ray (http/2)"
+    echo -e "${Green}3].${Font}  升级 V2Ray core"
+    echo -e "—————————————— [配置变更] ——————————————"
+    echo -e "${Green}4].${Font}  变更 UUID"
+    echo -e "${Green}5].${Font}  变更 alterid"
+    echo -e "${Green}6].${Font}  变更 port"
+    echo -e "${Green}7].${Font}  变更 TLS 版本(仅ws+tls有效)"
+    echo -e "—————————————— [v2ray信息] ——————————————"
+    echo -e "${Green}8].${Font}  查看 实时访问日志"
+    echo -e "${Green}9].${Font}  查看 实时错误日志"
+    echo -e "${Green}10].${Font} 查看 V2Ray 配置信息"
+    echo -e "—————————————— [其他选项] ——————————————"
+    echo -e "${Green}11].${Font} 安装 4合1 bbr 锐速安装脚本"
+    echo -e "${Green}12].${Font} 安装 MTproxy(支持TLS混淆)"
+    echo -e "${Green}13].${Font} 证书 有效期更新"
+    echo -e "${Green}14].${Font} 卸载 V2Ray"
+    echo -e "${Green}15].${Font} 更新 证书crontab计划任务"
+    echo -e "${Green}16].${Font} 退出 \n"
 
     update_sh
     read -p "请输入数字：" menu_num
