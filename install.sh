@@ -27,7 +27,7 @@ Error="${Red}[错误]${Font}"
 shell_version="1.0.6"
 shell_mode="None"
 version_cmp="/tmp/version_cmp.tmp"
-v2ray_conf_dir="/etc/v2ray"
+v2ray_conf_dir="/usr/local/etc/v2ray"
 nginx_conf_dir="/etc/nginx/conf/conf.d"
 v2ray_conf="${v2ray_conf_dir}/config.json"
 nginx_conf="${nginx_conf_dir}/v2ray.conf"
@@ -36,7 +36,7 @@ web_dir="/home/wwwroot"
 nginx_openssl_src="/usr/local/src"
 v2ray_bin_file="/usr/bin/v2ray"
 v2ray_info_file="$HOME/v2ray_info.inf"
-v2ray_qr_config_file="/etc/v2ray/vmess_qr.json"
+v2ray_qr_config_file="/usr/local/etc/v2ray/vmess_qr.json"
 nginx_systemd_file="/etc/systemd/system/nginx.service"
 v2ray_systemd_file="/etc/systemd/system/v2ray.service"
 v2ray_access_log="/var/log/v2ray/access.log"
@@ -279,16 +279,16 @@ v2ray_install(){
     if [[ -d /root/v2ray ]];then
         rm -rf /root/v2ray
     fi
-    if [[ -d /etc/v2ray ]];then
-        rm -rf /etc/v2ray
+    if [[ -d /usr/local/etc/v2ray ]];then
+        rm -rf /usr/local/etc/v2ray
     fi
     mkdir -p /root/v2ray && cd /root/v2ray
-    wget -N --no-check-certificate https://install.direct/go.sh
+    curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh
 
     ## wget http://install.direct/go.sh
 
-    if [[ -f go.sh ]];then
-        bash go.sh --force
+    if [[ -f install-release.sh ]];then
+        bash install-release.sh --force
         judge "安装 V2ray"
     else
         echo -e "${Error} ${RedBG} V2ray 安装文件下载失败，请检查下载地址是否可用 ${Font}"
@@ -441,7 +441,7 @@ acme(){
     fi
 }
 v2ray_conf_add_tls(){
-    cd /etc/v2ray
+    cd /usr/local/etc/v2ray
     wget https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/master/tls/config.json -O config.json
     modify_path
     modify_alterid
@@ -449,7 +449,7 @@ v2ray_conf_add_tls(){
     modify_UUID
 }
 v2ray_conf_add_h2(){
-    cd /etc/v2ray
+    cd /usr/local/etc/v2ray
     wget https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/master/http2/config.json -O config.json
     modify_path
     modify_alterid
